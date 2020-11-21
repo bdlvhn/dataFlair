@@ -1,0 +1,49 @@
+#Objective: Number Sum
+#Dataset: Input Data (100 TB)	=>	128 MB Blocks
+
+***********************************************
+Input Data
+
+1 2 45 67 8 43
+14 95 3 63 72 2
+56 78 12 9 4 3 77
+...
+***********************************************
+Input to Mapper
+
+key	value
+sum	1 2 45 67 8 43
+sum	14 95 3 63 72 2
+sum	56 78 12 9 4 3 77
+...
+***********************************************
+Processing (map) (custom business logic)
+
+1 2 45 67 8 43
+(sum all numbers)
+1+2+45+67+8+43
+(166)
+(249)
+(369)
+***********************************************
+Output from the mapper (write to local disk)
+
+key		value
+sum		166
+sum		249
+sum		369
+...
+***********************************************
+Input to reducer (All the values corresponding to same key goes to same reducer)
+
+key		values
+sum		[166 249 369 3149 1439 158 395 135 123 ...]
+***********************************************
+Processing in reducer (custom business logic)
+
+(sum all the numbers)
+166+249+369+3149+1439+158+395+135+123+...
+***********************************************
+Output from the reducer (Final output)
+
+47283134061340961304180496814361

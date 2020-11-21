@@ -1,0 +1,59 @@
+#Objective: Sar Log Analysis (cpu)
+#Dataset: Input Data (100 TB)	=>	128 MB Blocks
+
+***********************************************
+Input Data
+
+phddn001        240613,20:44        Average:        all        4.05        0        10.17        0.02        0        85.76
+phddn001        240613,20:45        Average:        all        4.09        0        10.31        0.02        0        85.59
+phddn001        240613,20:46        Average:        all        4.12        0        10.43        0.02        0        85.44
+phddn001        240613,20:47        Average:        all        4.09        0        10.46        0.02        0        85.44
+...
+***********************************************
+Input to Mapper
+
+key	           		       value
+hostName + \t + date	        CPU     %user     %nice   %system  %iowait   %steal  <%idle>
+phddn001	240613        Average:        all        4.05        0        10.17        0.02        0        85.76
+phddn001	240613        Average:        all        4.09        0        10.31        0.02        0        85.59
+phddn001	240613        Average:        all        4.12        0        10.43        0.02        0        85.44
+phddn001	240613        Average:        all        4.09        0        10.46        0.02        0        85.44
+...
+***********************************************
+Processing (map) (custom business logic)
+
+(take a cpu usage by substituting idle from 100)
+100 - %idle
+***********************************************
+Output from the mapper (write to local disk)
+
+key		value
+phddn001	240613	14.24
+phddn001	240613	14.41
+phddn001	240613	14.56
+phddn001	240613	14.56
+...
+***********************************************
+Input to reducer (All the values corresponding to same key goes to same reducer)
+
+key		values
+phddn001	240613	[14.24, 14.41, 14.56, 14.56]...
+phddn001	250613	[14.61, 14.19, 14.47, 14.10]...
+phddn001	260613	[14.49, 14.91, 14.78, 14.42]...
+...
+***********************************************
+Processing in reducer (custom business logic)
+
+(aggregate average for each keys)
+phddn001	240613	sum / length
+phddn001	250613	sum / length
+phddn001	260613	sum / length
+...
+***********************************************
+Output from the reducer (Final output)
+
+key		value
+phddn001	240613	14.37%
+phddn001	250613	14.49%
+phddn001	260613	14.69%
+...

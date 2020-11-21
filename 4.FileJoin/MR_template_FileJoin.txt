@@ -1,0 +1,79 @@
+#Objective: File Join
+#Dataset: Input Data (100 TB)	=>	128 MB Blocks
+
+***********************************************
+Input Data
+
+#First File (Contains Employee Name Data) (size 1TB)
+id,name
+101,Gaurav
+102,Rohit
+103,Karishma
+104,Darshan
+105,Divya
+
+#Second File (Contains Employee Department Data) (size 1TB)
+id,dept
+101,Sales
+102,Research
+103,NMG
+104,Admin
+105,HR
+***********************************************
+Input to Mapper
+
+key	value
+0	101,Gaurav
+1	102,Rohit
+2	103,Karishma
+3	104,Darshan
+4	105,Divya
+
+5	101,Sales
+6	102,Research
+7	103,NMG
+8	104,Admin
+9	105,HR
+***********************************************
+Processing (map) (custom business logic)
+
+(key, value) = (#, name)
+(key, value) = (#, dept)
+***********************************************
+Output from the mapper (write to local disk)
+
+key	value
+101	Gaurav
+102	Rohit
+103	Karishma
+104	Darshan
+105	Divya
+
+101	Sales
+102	Research
+103	NMG
+104	Admin
+105	HR
+..
+***********************************************
+Input to reducer (All the values corresponding to same key goes to same reducer)
+
+key		values
+101	Gaurav,Sales
+102	Rohit,Research
+103	Karishma,NMG
+104	Darshan,Admin
+105	Divya,HR
+***********************************************
+Processing in reducer (custom business logic)
+
+(key, value) = (null, [id,name,dept])
+***********************************************
+Output from the reducer (Final output)
+
+key	value
+	id,name,dept
+null	101,Gaurav,Sales
+null	102,Rohit,Research
+null	103,Karishma,NMG
+...
