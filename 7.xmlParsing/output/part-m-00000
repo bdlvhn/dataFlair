@@ -1,0 +1,2 @@
+fs.defaultFS,hdfs://localhost:9000
+hadoop.tmp.dir,/home/donghoon/hdata
