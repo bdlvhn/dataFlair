@@ -1,6 +1,6 @@
 ## Hadoop Project 1 - WordCount
 
-> 목적 : 데이터 파일을 읽어와서 단어 단위로 word count를 실행하는 MapReduce를 작성한다.
+> 목적 : 데이터 파일을 읽어와서 단어 단위로 word count를 실행하는 MapReduce를 작성한다.\n
 > 데이터셋 : Input Data => 128 MB Blocks
 
 ## 1. input data
