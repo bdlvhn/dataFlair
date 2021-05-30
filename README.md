@@ -1,4 +1,4 @@
-# Hadoop Eco System Project : Using Hadoop, MapReduce
+# Hadoop Project : Using Hadoop, MapReduce
 ## Index
   - 프로젝트 목적
   - 개발환경
